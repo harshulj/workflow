@@ -16,8 +16,21 @@ class Project(models.Model):
     entry       = models.ForeignKey(Flow, blank=True, null=True, related_name='entry_for')
     state       = models.CharField(max_length=3,
             choices=ProjectStates.choices(), default=ProjectStates.NEW)
+    processors  = models.ManyToManyField('Processor', related_name='projects')
+
     created_on  = models.DateTimeField(auto_now_add=True)
     updated_on  = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Processor(models.Model):
+    name    = models.CharField(max_length=128)
+
+    created_on  = models.DateTimeField(auto_now_add=True)
+    updated_on  = models.DateTimeField(auto_now=True)
+
 
     def __unicode__(self):
         return self.name
